@@ -977,7 +977,7 @@ export interface Database {
           created_at?: string;
         };
       };
-      service_providers: {
+      partners: {
         Row: {
           id: number;
           email: string;

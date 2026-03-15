@@ -5,18 +5,18 @@ import { formatDate } from "@/lib/utils";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
 import { ImagePreview } from "@/components/shared/image-preview";
-import { ProviderActions } from "./client";
+import { PartnerActions } from "./client";
 
 interface Props {
   params: Promise<{ id: string }>;
 }
 
-export default async function ServiceProviderDetailPage({ params }: Props) {
+export default async function PartnerDetailPage({ params }: Props) {
   const { id } = await params;
   const supabase = createAdminClient();
 
   const { data } = await supabase
-    .from("service_providers")
+    .from("partners")
     .select("*")
     .eq("id", Number(id))
     .single();
@@ -29,7 +29,7 @@ export default async function ServiceProviderDetailPage({ params }: Props) {
     <div className="mx-auto max-w-3xl space-y-6">
       <div className="flex items-center gap-3">
         <Link
-          href="/service-providers"
+          href="/partners"
           className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="size-4" />
@@ -86,7 +86,7 @@ export default async function ServiceProviderDetailPage({ params }: Props) {
         </div>
       )}
 
-      <ProviderActions id={data.id} data={data} />
+      <PartnerActions id={data.id} data={data} />
     </div>
   );
 }

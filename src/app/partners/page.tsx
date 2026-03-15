@@ -5,9 +5,9 @@ import { formatDate } from "@/lib/utils";
 import { DataTable, type Column } from "@/components/shared/data-table";
 import { Badge } from "@/components/ui/badge";
 import type { Tables } from "@/lib/database.types";
-import { CreateProviderDialog } from "./create-dialog";
+import { CreatePartnerDialog } from "./create-dialog";
 
-type ServiceProvider = Tables<"service_providers">;
+type Partner = Tables<"partners">;
 
 interface Props {
   searchParams: Promise<{ page?: string; q?: string; category?: string }>;
@@ -15,7 +15,7 @@ interface Props {
 
 const CATEGORIES = ["동물미용", "동물병원", "동물호텔", "용품판매점"] as const;
 
-export default async function ServiceProvidersPage({ searchParams }: Props) {
+export default async function PartnersPage({ searchParams }: Props) {
   const params = await searchParams;
   const page = Math.max(1, Number(params.page) || 1);
   const q = params.q ?? "";
@@ -23,7 +23,7 @@ export default async function ServiceProvidersPage({ searchParams }: Props) {
 
   const supabase = createAdminClient();
   let query = supabase
-    .from("service_providers")
+    .from("partners")
     .select("*", { count: "exact" })
     .order("created_at", { ascending: false })
     .range((page - 1) * PAGE_SIZE, page * PAGE_SIZE - 1);
@@ -35,13 +35,13 @@ export default async function ServiceProvidersPage({ searchParams }: Props) {
   const rows = data ?? [];
   const totalCount = count ?? 0;
 
-  const columns: Column<ServiceProvider>[] = [
+  const columns: Column<Partner>[] = [
     {
       key: "id",
       header: "ID",
       className: "w-16",
       render: (row) => (
-        <Link href={`/service-providers/${row.id}`} className="font-mono text-xs hover:underline">
+        <Link href={`/partners/${row.id}`} className="font-mono text-xs hover:underline">
           {row.id}
         </Link>
       ),
@@ -57,7 +57,7 @@ export default async function ServiceProvidersPage({ searchParams }: Props) {
       header: "이름",
       className: "w-32",
       render: (row) => (
-        <Link href={`/service-providers/${row.id}`} className="font-medium hover:underline">
+        <Link href={`/partners/${row.id}`} className="font-medium hover:underline">
           {row.name}
         </Link>
       ),
@@ -95,24 +95,24 @@ export default async function ServiceProvidersPage({ searchParams }: Props) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold">서비스제공자</h1>
-        <CreateProviderDialog />
+        <h1 className="text-2xl font-bold">파트너스</h1>
+        <CreatePartnerDialog />
       </div>
-      <ProviderFilters q={q} category={category} />
+      <PartnerFilters q={q} category={category} />
       <DataTable
         columns={columns}
         data={rows}
         totalCount={totalCount}
         page={page}
         pageSize={PAGE_SIZE}
-        basePath="/service-providers"
+        basePath="/partners"
         searchParams={filterParams}
       />
     </div>
   );
 }
 
-function ProviderFilters({ q, category }: { q: string; category: string }) {
+function PartnerFilters({ q, category }: { q: string; category: string }) {
   return (
     <form className="flex flex-wrap gap-2">
       <input

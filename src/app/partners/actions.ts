@@ -1,10 +1,11 @@
 "use server";
 
+import bcrypt from "bcryptjs";
 import { createAdminClient } from "@/lib/supabase/server";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export async function createServiceProvider(payload: {
+export async function createPartner(payload: {
   email: string;
   name: string;
   password: string;
@@ -20,32 +21,40 @@ export async function createServiceProvider(payload: {
   profile_image_urls?: string[] | null;
 }) {
   const supabase = createAdminClient();
+  const hashedPassword = await bcrypt.hash(payload.password, 12);
 
-  const { error } = await supabase.from("service_providers").insert(payload);
+  const { error } = await supabase
+    .from("partners")
+    .insert({ ...payload, password: hashedPassword });
 
   if (error) throw new Error(error.message);
 
-  revalidatePath("/service-providers");
+  revalidatePath("/partners");
 }
 
-export async function updateServiceProvider(
+export async function updatePartner(
   id: number,
   payload: Record<string, unknown>,
 ) {
   const supabase = createAdminClient();
 
+  // 패스워드가 포함되어 있으면 해싱
+  if (payload.password && typeof payload.password === "string") {
+    payload.password = await bcrypt.hash(payload.password, 12);
+  }
+
   const { error } = await supabase
-    .from("service_providers")
+    .from("partners")
     .update({ ...payload, updated_at: new Date().toISOString() })
     .eq("id", id);
 
   if (error) throw new Error(error.message);
 
-  revalidatePath(`/service-providers/${id}`);
-  revalidatePath("/service-providers");
+  revalidatePath(`/partners/${id}`);
+  revalidatePath("/partners");
 }
 
-export async function uploadProviderImage(
+export async function uploadPartnerImage(
   pathPrefix: string,
   base64: string,
 ): Promise<string> {
@@ -68,16 +77,16 @@ export async function uploadProviderImage(
   return data.publicUrl;
 }
 
-export async function deleteServiceProvider(id: number) {
+export async function deletePartner(id: number) {
   const supabase = createAdminClient();
 
   const { error } = await supabase
-    .from("service_providers")
+    .from("partners")
     .delete()
     .eq("id", id);
 
   if (error) throw new Error(error.message);
 
-  revalidatePath("/service-providers");
-  redirect("/service-providers");
+  revalidatePath("/partners");
+  redirect("/partners");
 }

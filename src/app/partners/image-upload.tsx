@@ -3,7 +3,7 @@
 import { useState, useRef } from "react";
 import { Label } from "@/components/ui/label";
 import { ImagePlus, X, Loader2 } from "lucide-react";
-import { uploadProviderImage } from "./actions";
+import { uploadPartnerImage } from "./actions";
 
 const MAX_IMAGES = 5;
 const MAX_SIZE_KB = 100;
@@ -64,7 +64,7 @@ export function ImageUploader({ initialUrls = [], onChange, pathPrefix }: Props)
       const newUrls: string[] = [];
       for (const file of toUpload) {
         const base64 = await compressToBase64(file);
-        const url = await uploadProviderImage(pathPrefix, base64);
+        const url = await uploadPartnerImage(pathPrefix, base64);
         newUrls.push(url);
       }
       const updated = [...urls, ...newUrls];

@@ -14,12 +14,12 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Loader2, Plus } from "lucide-react";
-import { createServiceProvider } from "./actions";
+import { createPartner } from "./actions";
 import { ImageUploader } from "./image-upload";
 
 const CATEGORIES = ["동물미용", "동물병원", "동물호텔", "용품판매점"] as const;
 
-export function CreateProviderDialog() {
+export function CreatePartnerDialog() {
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -33,7 +33,7 @@ export function CreateProviderDialog() {
 
     try {
       const fd = new FormData(e.currentTarget);
-      await createServiceProvider({
+      await createPartner({
         email: (fd.get("email") as string).trim(),
         name: (fd.get("name") as string).trim(),
         password: (fd.get("password") as string).trim(),
@@ -71,12 +71,12 @@ export function CreateProviderDialog() {
       <DialogTrigger asChild>
         <Button size="sm">
           <Plus className="size-4" />
-          서비스제공자 추가
+          파트너스 추가
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>서비스제공자 추가</DialogTitle>
+          <DialogTitle>파트너스 추가</DialogTitle>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="grid grid-cols-2 gap-4">

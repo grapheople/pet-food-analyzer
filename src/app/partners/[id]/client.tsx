@@ -14,15 +14,15 @@ import {
 } from "@/components/ui/dialog";
 import { Loader2, Pencil, Trash2 } from "lucide-react";
 import { ConfirmDialog } from "@/components/shared/confirm-dialog";
-import { updateServiceProvider, deleteServiceProvider } from "../actions";
+import { updatePartner, deletePartner } from "../actions";
 import { ImageUploader } from "../image-upload";
 import type { Tables } from "@/lib/database.types";
 
-type ServiceProvider = Tables<"service_providers">;
+type Partner = Tables<"partners">;
 
 const CATEGORIES = ["동물미용", "동물병원", "동물호텔", "용품판매점"] as const;
 
-export function ProviderActions({ id, data }: { id: number; data: ServiceProvider }) {
+export function PartnerActions({ id, data }: { id: number; data: Partner }) {
   const router = useRouter();
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -55,7 +55,7 @@ export function ProviderActions({ id, data }: { id: number; data: ServiceProvide
 
       payload.profile_image_urls = imageUrls.length > 0 ? imageUrls : [];
 
-      await updateServiceProvider(id, payload);
+      await updatePartner(id, payload);
       setEditOpen(false);
       router.refresh();
     } catch (e) {
@@ -68,7 +68,7 @@ export function ProviderActions({ id, data }: { id: number; data: ServiceProvide
   async function handleDelete() {
     setDeleting(true);
     try {
-      await deleteServiceProvider(id);
+      await deletePartner(id);
     } catch {
       alert("삭제에 실패했습니다.");
       setDeleting(false);
@@ -94,7 +94,7 @@ export function ProviderActions({ id, data }: { id: number; data: ServiceProvide
       <Dialog open={editOpen} onOpenChange={setEditOpen}>
         <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>서비스제공자 수정</DialogTitle>
+            <DialogTitle>파트너스 수정</DialogTitle>
           </DialogHeader>
           <form onSubmit={handleEdit} className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
@@ -178,8 +178,8 @@ export function ProviderActions({ id, data }: { id: number; data: ServiceProvide
       <ConfirmDialog
         open={deleteOpen}
         onOpenChange={setDeleteOpen}
-        title="서비스제공자 삭제"
-        description="이 서비스제공자를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
+        title="파트너스 삭제"
+        description="이 파트너스를 삭제하시겠습니까? 이 작업은 되돌릴 수 없습니다."
         onConfirm={handleDelete}
         loading={deleting}
       />
