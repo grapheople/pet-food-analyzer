@@ -737,7 +737,7 @@ export interface Database {
           user_id: number;
           pet_profile_id: number | null;
           grooming_date: string;
-          image_url: string | null;
+          image_urls: Json | null;
           description: string | null;
           shop_name: string | null;
           created_at: string;
@@ -746,7 +746,7 @@ export interface Database {
           user_id: number;
           pet_profile_id?: number | null;
           grooming_date: string;
-          image_url?: string | null;
+          image_urls?: Json | null;
           description?: string | null;
           shop_name?: string | null;
           created_at?: string;
@@ -755,7 +755,7 @@ export interface Database {
           user_id?: number;
           pet_profile_id?: number | null;
           grooming_date?: string;
-          image_url?: string | null;
+          image_urls?: Json | null;
           description?: string | null;
           shop_name?: string | null;
           created_at?: string;
@@ -853,7 +853,7 @@ export interface Database {
           distance_meters: number;
           steps: number;
           memo: string | null;
-          image_url: string | null;
+          image_urls: Json | null;
           pet_comment: string | null;
           pet_comment_en: string | null;
           route_coordinates: Json | null;
@@ -868,7 +868,7 @@ export interface Database {
           distance_meters?: number;
           steps?: number;
           memo?: string | null;
-          image_url?: string | null;
+          image_urls?: Json | null;
           pet_comment?: string | null;
           pet_comment_en?: string | null;
           route_coordinates?: Json | null;
@@ -883,7 +883,7 @@ export interface Database {
           distance_meters?: number;
           steps?: number;
           memo?: string | null;
-          image_url?: string | null;
+          image_urls?: Json | null;
           pet_comment?: string | null;
           pet_comment_en?: string | null;
           route_coordinates?: Json | null;
@@ -975,6 +975,60 @@ export interface Database {
           image_url?: string | null;
           record_date?: string;
           created_at?: string;
+        };
+      };
+      service_providers: {
+        Row: {
+          id: number;
+          email: string;
+          name: string;
+          password: string;
+          category: string;
+          country: string | null;
+          city: string | null;
+          address1: string | null;
+          address2: string | null;
+          phone: string | null;
+          instagram_url: string | null;
+          website_url: string | null;
+          profile_image_urls: Json | null;
+          description: string | null;
+          created_at: string;
+          updated_at: string;
+        };
+        Insert: {
+          email: string;
+          name: string;
+          password: string;
+          category: string;
+          country?: string | null;
+          city?: string | null;
+          address1?: string | null;
+          address2?: string | null;
+          phone?: string | null;
+          instagram_url?: string | null;
+          website_url?: string | null;
+          profile_image_urls?: Json | null;
+          description?: string | null;
+          created_at?: string;
+          updated_at?: string;
+        };
+        Update: {
+          email?: string;
+          name?: string;
+          password?: string;
+          category?: string;
+          country?: string | null;
+          city?: string | null;
+          address1?: string | null;
+          address2?: string | null;
+          phone?: string | null;
+          instagram_url?: string | null;
+          website_url?: string | null;
+          profile_image_urls?: Json | null;
+          description?: string | null;
+          created_at?: string;
+          updated_at?: string;
         };
       };
     };

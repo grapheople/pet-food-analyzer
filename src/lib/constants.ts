@@ -14,6 +14,7 @@ import {
   Footprints,
   Package,
   HelpCircle,
+  Store,
 } from "lucide-react";
 
 export const PAGE_SIZE = 20;
@@ -21,6 +22,7 @@ export const PAGE_SIZE = 20;
 export const NAV_ITEMS = [
   { href: "/", label: "대시보드", icon: LayoutDashboard },
   { href: "/users", label: "사용자", icon: Users },
+  { href: "/service-providers", label: "서비스제공자", icon: Store },
   { href: "/pet-profiles", label: "반려동물", icon: Dog },
   { href: "/point-transactions", label: "포인트", icon: Coins },
   { href: "/gem-transactions", label: "젬", icon: Gem },

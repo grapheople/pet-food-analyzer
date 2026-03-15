@@ -70,7 +70,10 @@ export default async function GroomingRecordsPage({ searchParams }: Props) {
       key: "image",
       header: "사진",
       className: "w-14",
-      render: (row) => <ImagePreview src={row.image_url} alt="미용" />,
+      render: (row) => {
+        const urls = row.image_urls as string[] | null;
+        return <ImagePreview src={urls?.[0] ?? null} alt="미용" />;
+      },
     },
     {
       key: "shop_name",
