@@ -112,3 +112,20 @@ supabase functions deploy analyze-stool
 - `food_analyses`: 사료 분석 결과 (nutrients, ingredients 등 JSONB)
 - `stool_analyses`: 배변 분석 결과 (color, consistency, health_score 등)
 - Storage 버킷: `analysis-images` (food/, stool/ 폴더)
+
+## Supabase 관리 (중앙화)
+
+**DB 마이그레이션은 `pethealth` 프로젝트에서 중앙 관리합니다. 이 프로젝트에는 마이그레이션 파일이 없습니다.**
+Edge Functions(`supabase/functions/`)만 이 프로젝트에서 관리합니다.
+
+- 마이그레이션 생성/push: `pethealth/supabase/migrations/`에서 수행
+- 스키마 타입: `src/lib/database.types.ts` (자동 생성 파일, 직접 수정 금지)
+- 타입 재생성: `pethealth/`에서 `npx supabase gen types typescript --linked` 실행 후 복사
+
+### 관련 프로젝트
+
+| 프로젝트 | 역할 |
+|---------|------|
+| **pethealth** | Flutter 모바일 앱 + DB 마이그레이션 관리 |
+| **pethealth-partners** | 서비스 제공자 웹 |
+| **pethealth-admin** (현재) | 내부 운영 어드민 웹 + Edge Functions |
